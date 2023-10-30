@@ -3,7 +3,7 @@
 #include <string.h>
 #include "registros.h"
 
-#define TAMANHO_HASH 8
+#define TAMANHO_HASH 7
 #define REGISTRO_DADOS "registros.dat"
 #define METADADOS "meta.dat"
 
@@ -95,7 +95,7 @@ void inserirRegistro(FILE *dados, Registro *info, int metodo) {
         }
 
         printf("POSICAO: %d \n", posicao);
-        printf("LOOPs: %d \n", tentativa);
+        printf("SALTOS: %d \n", tentativa);
 
         rewind(dados);
         fseek(dados, sizeof(Registro) * posicao, SEEK_SET);
