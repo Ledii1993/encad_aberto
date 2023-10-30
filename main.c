@@ -8,7 +8,7 @@ int main() {
     FILE *dados;
     int metodo;
 
-    //system("cls");
+    system("cls");
 
     if ((meta = fopen("meta.dat", "r+b")) == NULL) {
         printf("ERRO: NAO FOI POSSIVEL ABRIR O ARQUIVO META.");
