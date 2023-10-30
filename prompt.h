@@ -13,16 +13,16 @@ void prompt(FILE *meta, FILE *dados, int metodo) {
 
     while (1) {
             printf("\n--------------------------------------------------\n");
-            printf("\nPor favor, selecione uma opcao:\n\nPara inserir um new Registro, digite '1'.\nPara deletar um Registro, digite '2'.\nPara encontrar um Registro, digite '3'.\nPara reiniciar a tabela, digite '4' (CUIDADO: TODOS OS ESPACOS DA TABELA SERAO ZERADOS)\n\nSe quiser ver os Registros, digite '5'.\n\nCaso deseje sair do programa, digite '6'\n");
+            printf("\nPor favor, selecione uma opcao:\n\nPara inserir um novo Registro, digite '1'.\nPara deletar um Registro, digite '2'.\nPara encontrar um Registro, digite '3'.\nPara reiniciar a tabela, digite '4' (CUIDADO: TODOS OS ESPACOS DA TABELA SERAO ZERADOS)\n\nSe quiser ver os Registros, digite '5'.\n\nCaso deseje sair do programa, digite '6'\n");
             printf("\nDigite uma das opcoes acima: ");
             scanf("%d", &escolha);
             switch (escolha){
         case (1) :
             printf("Digite o nome do registro a adicionar: ");
             scanf("%s", nome);
-            printf("\nDigite o codigo a se relacionar: ");
-            printf("\n");
+            printf("Digite o codigo a se relacionar: ");
             scanf("%d", &codigo);
+            printf("\n");
 
             new = criarRegistro(codigo, nome);
 

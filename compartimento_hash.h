@@ -7,6 +7,8 @@
 #define REGISTRO_DADOS "registros.dat"
 #define METADADOS "meta.dat"
 
+int totalColisoes = 0;
+
 Registro *criarRegistro(int codigoRegistro, char *nomeRegistro) {
     Registro *novo = (Registro *)malloc(sizeof(Registro));
     novo->codigo = codigoRegistro;
@@ -72,14 +74,14 @@ Registro *encontrarRegistro(FILE *dados, int codigo, int metodo) {
 
 void inserirRegistro(FILE *dados, Registro *info, int metodo) {
     Registro *temp;
-    int posicao, tentativa, totalColisoes, val = 0;
+    int posicao, tentativa, val = 0;
 
     tentativa = 0;
 
     temp = encontrarRegistro(dados, info->codigo, metodo);
 
     if (temp->codigo == info->codigo) {
-        printf("CODIGO: %d [EM USO].\n", temp->codigo);
+        printf("ERRO: CODIGO %d EM USO.\n", temp->codigo);
         return;
     }
 
@@ -122,8 +124,6 @@ void inserirRegistro(FILE *dados, Registro *info, int metodo) {
     } else {
         printf("ERRO: SEM ESPACO DISPONIVEL\n");
     }
-
-    printf("COLISOES: %d\n", totalColisoes);
 }
 
 void deletarRegistro(FILE *dados, int codigo, int metodo) {
@@ -193,6 +193,7 @@ void mostrarRegistros(FILE *dados, FILE *meta) {
     }
 
     printf("\nREGISTROS\n");
+    printf("TOTAL DE COLISOES ATE O MOMENTO: %d\n", totalColisoes);
     rewind(dados);
 
     for (i = 0; i < TAMANHO_HASH; i++) {
@@ -208,8 +209,8 @@ void mostrarRegistros(FILE *dados, FILE *meta) {
         fread(&registro->status, sizeof(int), 1, dados);
 
         printf("--------------------------------------------------\n");
-        printf("POSIÇÃO: %d\n", i);
-        printf("CÓDIGO: %d\n", registro->codigo);
+        printf("POSICAOO: %d\n", i);
+        printf("CODIGO: %d\n", registro->codigo);
         printf("REGISTRO: %s\n", registro->nome);
     }
 
@@ -257,6 +258,7 @@ void zerarRegistros(FILE *meta, FILE *dados) {
 
     printf("TABELA DE REGISTROS ZERADA!! \n");
     printf("ARQUIVOS ZERADOS!! \n\n");
+    totalColisoes = 0;
 
     rewind(dados);
     free(atual);

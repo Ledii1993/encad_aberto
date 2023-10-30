@@ -7,9 +7,11 @@ int main() {
     FILE *meta;
     FILE *dados;
     int metodo;
+    //int tamanhoHash = TAMANHO_HASH;
 
     system("cls");
 
+    //printf("TAMANHO DA HASH: ", &tamanhoHash);
     if ((meta = fopen("meta.dat", "r+b")) == NULL) {
         printf("ERRO: NAO FOI POSSIVEL ABRIR O ARQUIVO META.");
         exit(1);
