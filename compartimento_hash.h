@@ -79,7 +79,7 @@ void inserirRegistro(FILE *dados, Registro *info, int metodo) {
     temp = encontrarRegistro(dados, info->codigo, metodo);
 
     if (temp->codigo == info->codigo) {
-        printf("O código %d já está em uso. Escolha outro.\n", temp->codigo);
+        printf("CODIGO: %d [EM USO].\n", temp->codigo);
         return;
     }
 
@@ -92,8 +92,8 @@ void inserirRegistro(FILE *dados, Registro *info, int metodo) {
             posicao = hashDuplo(tentativa, info->codigo);
         }
 
-        printf("A posição definida foi: %d \n", posicao);
-        printf("A quantidade de tentativas loop foi: %d \n", tentativa);
+        printf("POSICAO: %d \n", posicao);
+        printf("LOOPs: %d \n", tentativa);
 
         rewind(dados);
         fseek(dados, sizeof(Registro) * posicao, SEEK_SET);
@@ -109,7 +109,7 @@ void inserirRegistro(FILE *dados, Registro *info, int metodo) {
         }
 
         totalColisoes += tentativa;
-        printf("A quantidade de colisões foi: %d \n", tentativa );
+        printf("COLISOES: %d \n", tentativa );
         tentativa++;
     }
 
@@ -120,10 +120,10 @@ void inserirRegistro(FILE *dados, Registro *info, int metodo) {
         fwrite(info->nome, sizeof(char), sizeof(info->nome), dados);
         fwrite(&info->status, sizeof(int), 1, dados);
     } else {
-        printf("Sem espaço no armazenamento.\n");
+        printf("ERRO: SEM ESPACO DISPONIVEL\n");
     }
 
-    printf("O total de colisões foi: %d\n", totalColisoes);
+    printf("COLISOES: %d\n", totalColisoes);
 }
 
 void deletarRegistro(FILE *dados, int codigo, int metodo) {
@@ -164,11 +164,11 @@ void deletarRegistro(FILE *dados, int codigo, int metodo) {
             fread(&atual->codigo, sizeof(int), 1, dados);
             fread(atual->nome, sizeof(char), sizeof(atual->nome), dados);
 
-            printf("Registro deletado com sucesso!\n");
+            printf("SUCESSO: REGISTRO DELETADO.\n");
             return;
         } else if (tentativa >= TAMANHO_HASH) {
             val = -1;
-            printf("Registro não encontrado.\n");
+            printf("ERRO: REGISTRO NAO ENCONTRADO.\n");
             free(atual);
             break;
         } else {
@@ -187,7 +187,7 @@ void mostrarRegistros(FILE *dados, FILE *meta) {
     fread(&contador, sizeof(int), 1, meta);
 
     if (contador == 0) {
-        printf("Nesse arquivo não há nenhm registro\n");
+        printf("FLAG: SEM REGISTROS.\n");
         free(registro);
         return;
     }
@@ -230,7 +230,7 @@ void zerarRegistros(FILE *meta, FILE *dados) {
     fclose(meta);
 
     if ((meta = fopen(METADADOS, "wb")) == NULL) {
-        printf("Erro ao abrir o arquivo da tabela meta\n");
+        printf("ERRO: NAO FOI POSSIVEL ABRIR O ARQUIVO META.\n");
         exit(1);
     }
 
@@ -248,15 +248,15 @@ void zerarRegistros(FILE *meta, FILE *dados) {
     fclose(meta);
 
     if ((meta = fopen(METADADOS, "r+b")) == NULL) {
-        printf("Erro ao abrir o arquivo da tabela meta\n");
+        printf("ERRO: NAO FOI POSSIVEL ABRIR O ARQUIVO META.\n");
         exit(1);
     }
 
     rewind(meta);
     fread(&novo, sizeof(int), 1, meta);
 
-    printf("TABELA DE REGISTROS ZERADA\n");
-    printf("ARQUIVOS ZERADOS \n\n");
+    printf("TABELA DE REGISTROS ZERADA!! \n");
+    printf("ARQUIVOS ZERADOS!! \n\n");
 
     rewind(dados);
     free(atual);

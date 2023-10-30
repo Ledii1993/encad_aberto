@@ -18,9 +18,10 @@ void prompt(FILE *meta, FILE *dados, int metodo) {
             scanf("%d", &escolha);
             switch (escolha){
         case (1) :
-            printf("Digite o nome do registro a adicionar:\n");
+            printf("Digite o nome do registro a adicionar: ");
             scanf("%s", nome);
-            printf("Digite o codigo a se relacionar: \n");
+            printf("\nDigite o codigo a se relacionar: ");
+            printf("\n");
             scanf("%d", &codigo);
 
             new = criarRegistro(codigo, nome);
@@ -32,13 +33,13 @@ void prompt(FILE *meta, FILE *dados, int metodo) {
             clock_t end1 = clock();
             time_spent1 += (double)(end1 - begin1) / CLOCKS_PER_SEC;
 
-            printf("TEMPO GASTO PARA CRIAR O REGISTRO: %f milisegundos\n", time_spent1 * 1000);
+            printf("TEMPO GASTO: %f ms\n", time_spent1 * 1000);
 
             free(new);
             //printf("fechando arquivos e ponteiros");
             break;
         case (2):
-            printf("Digite o código a deletar:\n");
+            printf("Digite o codigo a deletar:\n");
             scanf("%d", &codigo);
 
             double tempoGasto2 = 0.0;
@@ -48,12 +49,12 @@ void prompt(FILE *meta, FILE *dados, int metodo) {
             clock_t end2 = clock();
 
             tempoGasto2 += (double)(end2 - begin2) / CLOCKS_PER_SEC;
-            printf("TEMPO GASTO PARA DELETAR O REGISTRO: %f ms\n", tempoGasto2 * 1000);
+            printf("TEMPO GASTO: %f ms\n", tempoGasto2 * 1000);
 
             free(new);
             break;
         case (3):
-            printf("Digite o código desejado:\n");
+            printf("Digite o codigo desejado:\n");
             scanf("%d", &codigo);
 
             double tempoGasto3 = 0.0;
@@ -66,12 +67,12 @@ void prompt(FILE *meta, FILE *dados, int metodo) {
 
 
             if(new->codigo == -1){
-                printf("ERRO: REGISTRO NÃO ENCONTRADO!");
+                printf("ERRO: REGISTRO NAO ENCONTRADO!");
             }
             else{
                 printf("REGISTRO: %s \n", new->nome);
                 printf("CÓDIGO: %d \n", new->codigo);
-                printf("TEMPO GASTO PARA ENCONTRAR O REGISTRO: %f ms\n", tempoGasto2 * 1000);
+                printf("TEMPO GASTO: %f ms\n", tempoGasto2 * 1000);
             }
             break;
         case (4):
@@ -89,7 +90,7 @@ void prompt(FILE *meta, FILE *dados, int metodo) {
             //system("cls");
             break;
         default:
-            printf("Por favor, selecione uma opção:\n");
+            printf("Por favor, selecione uma opçao:\n");
             break;
         }
     }
