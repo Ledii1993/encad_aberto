@@ -9,10 +9,10 @@
 void prompt(FILE *meta, FILE *dados, int metodo) {
     int escolha, codigo;
     char nome[100];
-    Registro *new;
+    Registro *novo;
 
     while (1) {
-            printf("\n--------------------------------------------------\n");
+            printf("--------------------------------------------------\n");
             printf("\nPor favor, selecione uma opcao:\n\nPara inserir um novo Registro, digite '1'.\nPara deletar um Registro, digite '2'.\nPara encontrar um Registro, digite '3'.\nPara reiniciar a tabela, digite '4' (CUIDADO: TODOS OS ESPACOS DA TABELA SERAO ZERADOS)\n\nSe quiser ver os Registros, digite '5'.\n\nCaso deseje sair do programa, digite '6'\n");
             printf("\nDigite uma das opcoes acima: ");
             scanf("%d", &escolha);
@@ -24,18 +24,19 @@ void prompt(FILE *meta, FILE *dados, int metodo) {
             scanf("%d", &codigo);
             printf("\n");
 
-            new = criarRegistro(codigo, nome);
+            novo = criarRegistro(codigo, nome);
 
-            double time_spent1 = 0.0;
+            double tempoGasto1 = 0.0;
 
-            clock_t begin1 = clock();
-            inserirRegistro(dados, new, metodo);
-            clock_t end1 = clock();
-            time_spent1 += (double)(end1 - begin1) / CLOCKS_PER_SEC;
+            struct timespec inicio1, fim1;
+            clock_gettime(CLOCK_MONOTONIC, &inicio1);
+            inserirRegistro(dados, novo, metodo);
+            clock_gettime(CLOCK_MONOTONIC, &fim1);
+            tempoGasto1 = (fim1.tv_sec - inicio1.tv_sec) + (fim1.tv_nsec - inicio1.tv_nsec) / 1e9;
 
-            printf("TEMPO GASTO: %f ms\n", time_spent1 * 1000);
+            printf("TEMPO GASTO: %f ms\n", tempoGasto1 * 1000);
 
-            free(new);
+            free(novo);
             //printf("fechando arquivos e ponteiros");
             break;
         case (2):
@@ -44,14 +45,15 @@ void prompt(FILE *meta, FILE *dados, int metodo) {
 
             double tempoGasto2 = 0.0;
 
-            clock_t begin2 = clock();
+            struct timespec inicio2, fim2;
+            clock_gettime(CLOCK_MONOTONIC, &inicio2);
             deletarRegistro(dados, codigo, metodo);
-            clock_t end2 = clock();
-
-            tempoGasto2 += (double)(end2 - begin2) / CLOCKS_PER_SEC;
+            clock_gettime(CLOCK_MONOTONIC, &fim2);
+            tempoGasto2 = (fim2.tv_sec - inicio2.tv_sec) + (fim2.tv_nsec - inicio2.tv_nsec) / 1e9;
+            
             printf("TEMPO GASTO: %f ms\n", tempoGasto2 * 1000);
 
-            free(new);
+            free(novo);
             break;
         case (3):
             printf("Digite o codigo desejado:\n");
@@ -59,31 +61,31 @@ void prompt(FILE *meta, FILE *dados, int metodo) {
 
             double tempoGasto3 = 0.0;
 
-            clock_t begin3 = clock();
-            new = encontrarRegistro(dados, codigo, metodo);
-            clock_t end3 = clock();
+            struct timespec inicio3, fim3;
+            clock_gettime(CLOCK_MONOTONIC, &inicio3);
+            novo = encontrarRegistro(dados, codigo, metodo);
+            clock_gettime(CLOCK_MONOTONIC, &fim3);
+            tempoGasto3 = (fim3.tv_sec - inicio3.tv_sec) + (fim3.tv_nsec - inicio3.tv_nsec) / 1e9;
 
-            tempoGasto3 += (double)(end3 - begin3) / CLOCKS_PER_SEC; 
 
-
-            if(new->codigo == -1){
+            if(novo->codigo == -1){
                 printf("ERRO: REGISTRO NAO ENCONTRADO!");
             }
             else{
-                printf("REGISTRO: %s \n", new->nome);
-                printf("CÓDIGO: %d \n", new->codigo);
-                printf("TEMPO GASTO: %f ms\n", tempoGasto2 * 1000);
+                printf("REGISTRO: %s \n", novo->nome);
+                printf("CÓDIGO: %d \n", novo->codigo);
+                printf("TEMPO GASTO: %f ms\n", tempoGasto3 * 1000);
             }
             break;
         case (4):
             zerarRegistros(meta, dados);
-            free(new);
+            free(novo);
             break;
         case (5):
             mostrarRegistros(dados, meta);
             break;
         case (6):
-        free(new);
+        free(novo);
             fclose(meta);
             fclose(dados);
             exit(1);
